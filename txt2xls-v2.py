@@ -15,7 +15,8 @@ def normalize_date(date_str):
     """
     if not date_str.strip():
         return ""
-    
+
+
     # Essayer de détecter et convertir les formats connus
     for fmt in ("%Y%m%d", "%d/%m/%Y"):
         try:
@@ -27,7 +28,6 @@ def normalize_date(date_str):
     return ""
 
 
-# Fonction pour appliquer la normalisation sur une colonne de données
 def normalize_dates_in_column(column):
     """
     Applique la normalisation des dates sur une colonne de données.
@@ -35,10 +35,14 @@ def normalize_dates_in_column(column):
     :param column: La liste des dates à normaliser.
     :return: La liste des dates normalisées.
     """
-    return [normalize_date(date) for date in column if date != 'InstallDate']
+    colonne = []
+    for i, date in enumerate(column):
+        if i <= 1:                  # donc les 2 premieres lignes
+            colonne.append(date)    # ne sont pas des dates
+        else:
+            colonne.append(normalize_date(date))
 
-
-
+    return colonne
 
 
 
@@ -140,8 +144,8 @@ def extract_columns(input_file, col_specs):
     # pour chaque ligne dans la liste lignes sauf la second ligne
     for i, line in enumerate(lines):
 
-        if i == 1:      # on n evalue pas la seconde ligne du fichier
-            continue
+        # if i == 1:      # on n evalue pas la seconde ligne du fichier
+        #     continue
 
         # Pour chacune des 4 colonnes on extrait debut et fin
         for j, (start, end) in enumerate(col_specs):
@@ -214,15 +218,18 @@ if __name__ == "__main__":
 
     # liste de tuples, ou chaque tuple specifie le nom du fichier colonne temporaire
     col_files = [os.path.join(temp_dir, f"col{i+1}.txt") for i in range(4)]
+
+    # on sauvegarde la 1er ligne
+    premiere_ligne = None
     
     # on extrait les colonnes et on recupere une liste des colonnes
     columns = extract_columns(input_text_file_path, col_specs)
 
-
     # Normaliser la dernière colonne
-    # columns[-1] = normalize_dates_in_column(columns[-1])
+    columns[-1] = normalize_dates_in_column(columns[-1])
 
-
+    # for column in columns[-1]:
+    #     print(column)
 
     # on sauve les colonnes dans des fichiers temporaires
     save_columns_to_files(columns, col_files)

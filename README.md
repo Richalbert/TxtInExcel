@@ -43,3 +43,4 @@ En regardant le fichier il est constitue de 4 colonnes.
 - le fichier source est dans un codage different de utf8, donc il y a une detection du format a l'aide de la bibliotheque *chardet*
 - le fichier source semble avoir des lignes de taille fixe, il faut donc a un moment connaitre cette taille pour avoir la fin de la derniere colonne
 - la derniere colonne aui correspond a la date doit etre normalise
+- la normalisation modifie l'entete de la colonne 
