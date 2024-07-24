@@ -14,7 +14,7 @@ pip install -r requirements.txt
 
 
 ```sh
-python TxtInExcel.py -i data/input/exemple.txt -o data/output/exemple.xlsx -d ";"
+python txt2xls-v2.py -i data/input/exemple.txt -o data/output/exemple.xlsx -d ";"
 ```
 
 
