@@ -45,6 +45,8 @@ def fin_ligne(input_file):
         with open(input_file, 'rb') as f:
             result = chardet.detect(f.read())
             encoding = result['encoding']
+            print(result)
+            #print(result['encoding'])
 
         # Ouvrir le fichier d'entrée en lecture avec l'encodage detecte
         with open(input_file, 'r', encoding=encoding) as f_in:
